@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "geo-analyse"
+version = "0.1.0"
+description = ""
+authors = ["oytarhanova <oytarhanova@fintechiq.ru>"]
+readme = "README.md"
+packages = [{include = "geo_analyse"}]
+
+[tool.poetry.dependencies]
+python = "~3.12"
+osmnx = "^1.9.1"
+matplotlib = "^3.8.2"
+libpysal = "^4.9.2"
+contextily = "^1.5.0"
+folium = "^0.15.1"
+scikit-learn = "^1.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
