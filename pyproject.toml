@@ -14,6 +14,7 @@ libpysal = "^4.9.2"
 contextily = "^1.5.0"
 folium = "^0.15.1"
 scikit-learn = "^1.4.0"
+haversine = "^2.8.1"
 
 
 [build-system]
