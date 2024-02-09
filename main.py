@@ -46,6 +46,14 @@ def find_clusters(n_clust, points):
     return kmeans.labels_
 
 
+def associate_clusters_with_points(clusters_list, points):
+    res = []
+
+    for i in range(len(clusters_list)):
+        res.append((points[i], clusters_list[i]))
+    return res
+
+
 def form_graph(points):
     graph = nx.Graph()
 
@@ -63,10 +71,33 @@ def find_shortest_path(start_point, points):
     return nx.single_source_dijkstra(graph, start_point)
 
 
-def draw_map(path):
-    map = folium.Map((coordinates[0][0], coordinates[0][1]))
-    for pt in coordinates:
+def draw_map(path, coord, i):
+    map = folium.Map((coord[0][0], coord[0][1]))
+    for pt in coord:
         marker = folium.Marker([pt[0], pt[1]])
         map.add_child(marker)
-        map.add_to(folium.Polygon(path))
-    map.save('points.html')
+    for p in path:
+        map.add_to(folium.PolyLine(p))
+
+    map.save(f'k{i}.html')
+
+
+n_cl = 3
+cl = find_clusters(n_cl, coordinates)
+points_with_clusters = associate_clusters_with_points(cl, coordinates)
+
+root = mahachkala
+
+p = []
+c = []
+for i in range(n_cl):
+
+    coord = []
+    for point in points_with_clusters:
+        if point[1] == i:
+            coord.append(point[0])
+
+    coord.append(root)
+    path = find_shortest_path(root, coord)
+    p.append(path)
+    draw_map(path, coord, i)
