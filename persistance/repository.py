@@ -12,7 +12,11 @@ class Repository:
         self.postgres_session.add(model)
         self.postgres_session.commit()
 
-    async def get_coordinates_by_name(self, place_name: str):
-        stmt = select(PlaceModel.latitude, PlaceModel.latitude)\
+    def get_all_coordinates(self):
+        stmt = select(PlaceModel.latitude, PlaceModel.longitude)
+        return self.postgres_session.execute(stmt).all()
+
+    def get_coordinates_by_name(self, place_name: str):
+        stmt = select(PlaceModel.latitude, PlaceModel.longitude)\
             .filter(PlaceModel.place_name is place_name)
-        return self.postgres_session.scalar(stmt)
+        return self.postgres_session.execute(stmt).all()

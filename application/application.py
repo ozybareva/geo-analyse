@@ -52,3 +52,8 @@ class App:
             self.routers.load_coordinates_to_bd,
             methods=['POST']
         )
+        self.app.add_api_route(
+            '/build_routes',
+            self.routers.build_routes,
+            methods=['POST']
+        )

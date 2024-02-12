@@ -1,4 +1,5 @@
 import folium
+import injector
 import networkx as nx
 from sklearn.cluster import KMeans
 
@@ -84,7 +85,7 @@ def draw_map(path, i):
     map.save(f'path_{i}.html')
 
 
-def create_routes():
+def build_routes_by_coordinates(coordinates):
     n_cl = 3
     cl = find_clusters(n_cl, coordinates)
     points_with_clusters = associate_clusters_with_points(cl, coordinates)
