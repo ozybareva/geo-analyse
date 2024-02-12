@@ -1,6 +1,5 @@
 import folium
 import networkx as nx
-import osmnx as ox
 from sklearn.cluster import KMeans
 
 
@@ -69,15 +68,14 @@ def form_graph(points):
 
 def find_shortest_path(points):
     graph = form_graph(points)
-    p = []
+    path = []
     for i in range(len(points)-1):
-        p.append(nx.bellman_ford_path(graph, points[i], points[i+1]))
-
-    return p
+        path.append(nx.bellman_ford_path(graph, points[i], points[i+1]))
+    return path
 
 
 def draw_map(path, i):
-    map = folium.Map(root)
+    map = folium.Map()
     for p in path:
         for pt in p:
             map.add_child(folium.Marker([pt[0], pt[1]]))
@@ -86,21 +84,21 @@ def draw_map(path, i):
     map.save(f'path_{i}.html')
 
 
-n_cl = 3
-cl = find_clusters(n_cl, coordinates)
-points_with_clusters = associate_clusters_with_points(cl, coordinates)
+def create_routes():
+    n_cl = 3
+    cl = find_clusters(n_cl, coordinates)
+    points_with_clusters = associate_clusters_with_points(cl, coordinates)
 
-root = mahachkala
+    root = mahachkala
 
-p = []
-for i in range(n_cl):
+    for i in range(n_cl):
 
-    coord = []
-    for point in points_with_clusters:
-        if point[1] == i:
-            coord.append(point[0])
+        coord = []
+        for point in points_with_clusters:
+            if point[1] == i:
+                coord.append(point[0])
 
-    coord.append(root)
-    path = find_shortest_path(coord)
+        coord.append(root)
+        path = find_shortest_path(coord)
 
-    draw_map(path, i)
+        draw_map(path, i)
