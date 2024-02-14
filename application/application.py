@@ -6,7 +6,6 @@ from injector import Injector
 from fastapi import FastAPI
 
 from application.routers import Routers
-from persistance.models import PlaceModel
 from settings import Settings
 
 
