@@ -48,7 +48,6 @@ def build_routes_by_coordinates(point_coordinates: list):
 
     for i in range(n_clust):
         coord = [(point[0]) for point in points_with_clusters if point[1] == i]
-
         path = find_shortest_path(coord)
 
         draw_map(path, i)

@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres:13.0
+    container_name: geo-analyse
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+
+  geo-analyser:
+    container_name: geo-analyser
+    build:
+      dockerfile: Dockerfile
+      context: .
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    entrypoint: [ "python3", "start_app.py" ]
